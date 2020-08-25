@@ -12,39 +12,36 @@ import java.util.Properties;
 public class DB {
 
 	private static Connection conn = null;
-	
-	//pegando os dados que contem no arquivo
-	public static  Connection getConnection() {
-		if( conn == null) {
-			
+
+	// pegando os dados que contem no arquivo
+	public static Connection getConnection() {
+		if (conn == null) {
+
 			try {
 				Properties props = loadProperties();
 				String url = props.getProperty("dburl");
 				conn = DriverManager.getConnection(url, props);
-		
-			}
-			catch(SQLException e) {
+
+			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
 			}
 		}
 		return conn;
 	}
-	
+
 	public static void closedConnection() {
-		
-		if(conn != null) {
+
+		if (conn != null) {
 			try {
 				conn.close();
-			}
-			catch(SQLException e) {
+			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
-				
+
 			}
 		}
 	}
-	
-	
-	//Accessar ao arquivo que contem dados 
+
+	// Accessar ao arquivo que contem dados
 	private static Properties loadProperties() {
 
 		try (FileInputStream fs = new FileInputStream("db.properties")) {
@@ -59,24 +56,22 @@ public class DB {
 		}
 
 	}
-	
-	public static void closeStatement( Statement  st) {
-		if(st != null) {
+
+	public static void closeStatement(Statement st) {
+		if (st != null) {
 			try {
 				st.close();
-			}
-			catch(SQLException e) {
+			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
 			}
 		}
 	}
-	
+
 	public static void closeResults(ResultSet rs) {
-		if(rs != null) {
+		if (rs != null) {
 			try {
 				rs.close();
-			}
-			catch(SQLException e) {
+			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
 			}
 		}
